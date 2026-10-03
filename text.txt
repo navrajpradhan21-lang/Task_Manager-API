@@ -1,0 +1,7 @@
+git init
+git add .
+git commit -m "initial commmit"
+
+git remote add origin https://github.com/navrajpradhan21-lang/Task_Manager-API.git
+
+git branch -M main 
