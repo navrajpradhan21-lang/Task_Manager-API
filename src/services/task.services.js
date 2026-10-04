@@ -1,12 +1,31 @@
+import redis from "../config/redis.js";
 import TaskModel from "../models/task.model.js"
 
 export const createTask = async(data)=>{
-    return await TaskModel.create(data);
+
+    const task = await TaskModel.create(data);
+    await redis.del("tasks:all");
+    return task
 };
 
 
 export const getAllTask = async()=>{
-    return await TaskModel.find().sort({createdAt:-1});
+
+    const cachedTasks = await redis.get("tasks:all")
+
+    if(cachedTasks){
+        console.log("Cache HIT")
+        return JSON.parse(cachedTasks);
+    }
+
+    const tasks = await TaskModel.find().sort({createdAt:-1});
+    await redis.set(
+        "tasks:all",
+        JSON.stringify(tasks),
+        "EX",
+        60
+    )
+    return tasks
 };
 
 export const getTaskById = async(id)=>{
@@ -15,7 +34,7 @@ export const getTaskById = async(id)=>{
 
 export const updateTask = async(id,data)=>{
 
-    return await TaskModel.findByIdAndUpdate(
+    const task =  await TaskModel.findByIdAndUpdate(
         id,
         data,
         {
@@ -23,9 +42,20 @@ export const updateTask = async(id,data)=>{
             runValidators:true
         }
     );
+    if(task){
+        await redis.del("tasks:all");
+    }
+    return task
 
 };
 
 export const deleteTask = async(id)=>{
-    return await TaskModel.findByIdAndDelete(id);
+    
+      const task = await TaskModel.findByIdAndDelete(id);
+
+    if (task) {
+        await redis.del("tasks:all");
+    }
+
+    return task;
 }

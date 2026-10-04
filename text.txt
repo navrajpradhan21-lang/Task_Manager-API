@@ -6,3 +6,8 @@ git remote add origin https://github.com/navrajpradhan21-lang/Task_Manager-API.g
 git pull origin main
 git branch -M main 
 git push -u origin main
+
+
+------------------------Redis--------------------------
+docker pull redis:7
+docker run -d --name task-api-redis -p 6379:6379 redis:7
