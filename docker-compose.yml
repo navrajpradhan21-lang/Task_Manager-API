@@ -1,0 +1,17 @@
+services:
+  api:
+      build: .
+      container_name: task-api
+      ports:
+        - "5000:5000"
+      environment:
+        PORT: 5000
+        MONGO_URI: ${MONGO_URI}
+        REDIS_URI: redis://redis:6379
+      depends_on:
+        - redis
+  redis:
+    image: redis:7-alpine
+    container_name: task-api-redis
+    ports:
+      - "6379:6379"        

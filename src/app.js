@@ -22,7 +22,6 @@ app.get("/",(req,res)=>{
 
 });
 
-
 app.use('/api/tasks',router)
 
 // Must be after Routes
