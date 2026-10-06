@@ -4,7 +4,7 @@ import redis from "../config/redis.js";
 const WINDOW_SECONDS = 60;
 const MAX_REQUESTS = 5;
 
-const rateLimiter = async(req,res)=>{
+const rateLimiter = async(req,res,next)=>{
     const ip = req.ip;
     const key = `rate-limit:${ip}`;
 
