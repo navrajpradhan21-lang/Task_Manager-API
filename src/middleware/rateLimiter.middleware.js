@@ -2,7 +2,7 @@ import redis from "../config/redis.js";
 
 // Not this has a fixed window 
 const WINDOW_SECONDS = 60;
-const MAX_REQUESTS = 5;
+const MAX_REQUESTS = 100;
 
 const rateLimiter = async(req,res,next)=>{
     const ip = req.ip;

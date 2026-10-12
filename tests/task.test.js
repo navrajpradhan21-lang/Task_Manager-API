@@ -38,3 +38,27 @@ describe("Task ID validation",()=>{
         expect(response.body.success).toBe(false);
     });
 });
+
+describe("Additional task validation",()=>{
+    it("Should reject an invalid task status",async()=>{
+        const response = await request(app)
+            .post("/api/tasks")
+            .send({
+                title: "Learn backend",
+                status: "invalid-status"
+            });
+        expect(response.status).toBe(400);
+        expect(response.body.success).toBe(false);    
+    });
+    it("Should reject a title longer than 100 character",async()=>{
+        const response = await request(app)
+            .post("/api/tasks")
+            .send({
+                title: "A".repeat(101)
+            });
+
+        expect(response.status).toBe(400);
+        expect(response.body.success).toBe(false);
+    })
+
+})

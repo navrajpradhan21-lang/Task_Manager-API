@@ -5,7 +5,7 @@ import errorMiddleware from "./middleware/error.middleware.js";
 import requestLogger from "./middleware/requestLogger.middleware.js";
 
 const app = express();
-
+app.set("trust proxy",1)
 
 // Middleware
 
@@ -17,7 +17,8 @@ app.use(rateLimiter);
 app.get("/",(req,res)=>{
     res.json({
         success:true,
-        message:"Production Task API is running"
+        message:"Production Task API is running",
+        instance: process.env.INSTANCE_ID || "local"
     });
 
 });

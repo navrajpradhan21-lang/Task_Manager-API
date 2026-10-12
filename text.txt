@@ -11,3 +11,28 @@ git push -u origin main
 ------------------------Redis--------------------------
 docker pull redis:7
 docker run -d --name task-api-redis -p 6379:6379 redis:7
+
+
+
+----------------------------------------------------------------------------------------------------------
+Our goals:
+1. Test the API endpoints automatically.
+2. Test validation and error responses.
+3. Understand how to test rate limiting.
+4. Check what happens when an API instance or dependency becomes unavailable.
+13.1 — Understand the testing layers
+
+Unit tests
+Test one function or component in isolation—for example, a task validation helper.
+
+
+
+
+Integration tests
+Test whether routes, middleware, controllers, and services work together, often with controlled database dependencies.
+
+
+
+
+End-to-end tests
+Test the running system through its actual entry point, including NGINX and the API containers.
