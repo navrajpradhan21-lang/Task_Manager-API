@@ -29,7 +29,7 @@ export const getAllTask = async()=>{
 };
 
 export const getTaskById = async(id)=>{
-    return await Task.findById(id);
+    return await TaskModel.findById(id);
 }
 
 export const updateTask = async(id,data)=>{
